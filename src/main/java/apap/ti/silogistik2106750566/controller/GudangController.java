@@ -1,6 +1,8 @@
 package apap.ti.silogistik2106750566.controller;
 
+import apap.ti.silogistik2106750566.DTO.response.CariBarangResponse;
 import apap.ti.silogistik2106750566.DTO.response.DetailGudangResponse;
+import apap.ti.silogistik2106750566.model.Barang;
 import apap.ti.silogistik2106750566.model.Gudang;
 import apap.ti.silogistik2106750566.model.GudangBarang;
 import apap.ti.silogistik2106750566.service.GudangService;
@@ -33,10 +35,17 @@ public class GudangController {
     }
 
     @GetMapping("/gudang/cari-barang")
-    private String cariBarang(@RequestParam String sku, Model model){
-        List<GudangBarang> listGudang = gudangService.cariBarang(sku);
+    private String cariBarangWithParam(@RequestParam String sku, Model model){
+        List<CariBarangResponse> listGudang = gudangService.cariBarangWithParam(sku);
         model.addAttribute("listGudang", listGudang);
         return "gudang";
-
     }
+
+    @GetMapping("/gudang/cari-barang")
+    private String cariBarang(Model model){
+        List<Barang> listBarang = gudangService.getListBarang();
+        model.addAttribute("listBarang", listBarang);
+        return "gudang";
+    }
+
 }
